@@ -1,7 +1,14 @@
 package U3_final;
 
+/**
+ * @author Josh Gossett
+ */
+
 public class Menu {
 
+    /**
+     *  prints company logo
+     */
     public void printLogo()
     {
         System.out.println(
@@ -10,6 +17,9 @@ public class Menu {
                     "*************************\n");
     }
 
+    /**
+     * prints main menu
+     */
     public void printMainMenu()
     {
         System.out.println(
@@ -17,6 +27,9 @@ public class Menu {
                 "2 - Close Garage");
     }
 
+    /**
+     * prints checkin menu
+     */
     public void printCheckinMenu()
     {
         System.out.println(
@@ -26,6 +39,9 @@ public class Menu {
                 "2 - Special Event");
     }
 
+    /**
+     * prints checkout menu
+     */
     public void printCheckoutMenu()
     {
         System.out.println(
@@ -36,6 +52,9 @@ public class Menu {
                 "3 - Lost Ticket");
     }
 
+    /**
+     * prints closing menu
+     */
     public void closingTime()
     {
         System.out.println("*Speakers start to blast \"Closing Time\" by Semisonic*\n");
