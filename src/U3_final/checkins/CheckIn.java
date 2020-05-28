@@ -15,24 +15,24 @@ public class CheckIn implements InMachine {
     private int TicketId = 1;
 
     @Override
-    public void inMachineStuff(List<Ticket> tickets, List<Ticket> historyTix) {
-        int enterTime = (rand.nextInt(6) + 7);
-        newTicket = new Ticket(TicketId, enterTime);
-        tickets.add(newTicket);
-        historyTix.add(newTicket);
-        for (Ticket ticket : tickets) {
+    public void inMachineStuff(List<Ticket> tickets, List<Ticket> tickets2) {
+        for (Ticket ticket : tickets2) {
             if (ticket.getId() == TicketId)
             {
                 TicketId++;
             }
         }
+        int enterTime = (rand.nextInt(6) + 7);
+        newTicket = new Ticket(TicketId, enterTime);
+        tickets.add(newTicket);
+        tickets2.add(newTicket);
     }
 
     @Override
     public void displayInfo() {
         LocalTime enterTimeFormatter = LocalTime.of(newTicket.getEnterTime(), 0);
         System.out.println("Printing Ticket (Keep in your car)\n");
-        System.out.println("\n********* Ticket *********\n" +
+        System.out.println("********* Ticket *********\n" +
                 "Ticket Id: " + newTicket.getId() +  "\n" +
                 "Car entered garage at " + enterTimeFormatter.format(DateTimeFormatter.ofPattern("hh:mm a")));
         try

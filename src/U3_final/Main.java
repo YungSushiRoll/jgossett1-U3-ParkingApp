@@ -2,7 +2,6 @@ package U3_final;
 
 import U3_final.checkins.CheckInStrategy;
 import U3_final.checkouts.OutMachineStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,66 +18,75 @@ public class Main {
         OutMachine outWID = checkOutStrategy.getOutMachineType("withid");
         OutMachine lost = checkOutStrategy.getOutMachineType("lost");
         OutMachine outWEvent = checkOutStrategy.getOutMachineType("specialevent");
-        // FileIn fi new FileIn();
-        // fi.readFile()
-        // FileOut fo new FileOut();
+        Menu menu = new Menu();
+        double totalEarnings;
+        TicketWriter fo = new TicketWriter();
         Scanner keyboard = new Scanner(System.in);
         boolean endOfNight = false;
         boolean inAndOut = false;
         do {
             if(!inAndOut) {
-                System.out.println("Checking in");
+                menu.printLogo();
+                menu.printMainMenu();
                 String check = keyboard.nextLine();
                 switch (check) {
                     case "1":
-                        System.out.println("check in how");
+                        menu.printCheckinMenu();
                         String checkingIN = keyboard.nextLine();
                         switch (checkingIN) {
                             case "1":
-                                System.out.println("checkin");
                                 checkIn.inMachineStuff(tickets, fileTickets);
                                 checkIn.displayInfo();
                                 inAndOut = true;
                                 break;
                             case "2":
-                                System.out.println("event");
+                                eventIn.inMachineStuff(tickets, fileTickets);
+                                eventIn.displayInfo();
                                 inAndOut = true;
                                 break;
                         }
                         break;
                     case "2":
-                        System.out.println("Closing");
-                        System.out.println("Total sales from Checkouts with ticket: $" +
-                                outWID.getTotalSales() + "\nTotal customers checked out with tickets: " +
-                                + outWID.getTotalVisitors() +
+                        menu.closingTime();
+                        System.out.println("*******************************************\n" +
+                                "$" + outWID.getTotalSales() + " was collected from " + outWID.getTotalVisitors() + " Check Ins\n");
+                        System.out.println("$" + outWEvent.getTotalSales() + " was collected from "+ outWEvent.getTotalVisitors() + " Special Events\n");
+                        System.out.println("$" + lost.getTotalSales() + " was collected from " + lost.getTotalVisitors() + " Lost Tickets\n\n");
+
+                        totalEarnings = (outWID.getTotalSales() + outWEvent.getTotalSales() + lost.getTotalSales());
+
+                        System.out.println("$" + totalEarnings + " was collected overall" +
                                 "\n*******************************************\n");
-                        // fileTickets to file
-                        // takes fileTickets calcs totals and prints
+
+                        // writes tickets to file
+                        try {
+                            fo.writeToFile(fileTickets);
+                        } catch (Exception e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
+
                         endOfNight = true;
                         break;
                 }
             } else {
-                System.out.println("Checking out");
+                menu.printLogo();
+                menu.printCheckoutMenu();
                 String resp = keyboard.nextLine();
                 switch (resp) {
                     case "1":
-                        System.out.println("checking out with id");
                         outWID.outMachineStuff(tickets, fileTickets);
                         outWID.displayInfo();
-                        for (Ticket ticket : tickets) {
-                            System.out.println(ticket.getId() + " t " + ticket.getEnterTime());
-                        }
-                        for (Ticket ticket2 : fileTickets) {
-                            System.out.println(ticket2.getId() + " file " + ticket2.getEnterTime() + " " + ticket2.getExitTime());
-                        }
                         inAndOut = false;
                         break;
                     case "2":
-                        System.out.println("checking out lost");
+                        outWEvent.outMachineStuff(tickets,fileTickets);
+                        outWEvent.displayInfo();
                         inAndOut = false;
                         break;
                     case "3":
-                        System.out.println("checking out event");
+                        lost.outMachineStuff(tickets,fileTickets);
+                        lost.displayInfo();
                         inAndOut = false;
                         break;
                 }

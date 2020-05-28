@@ -1,0 +1,16 @@
+    Ticket History
+----------------------
+Tickets from
+05/28/2020 17:00:02
+----------------------
+
+Tickets from
+05/28/2020 17:00:25
+----------------------
+
+Tickets from
+05/28/2020 17:00:39
+----------------------
+Ticket ID: 1, Cost: 6
+Ticket ID: 2, Cost: 20
+Ticket ID: 3, Cost: 25

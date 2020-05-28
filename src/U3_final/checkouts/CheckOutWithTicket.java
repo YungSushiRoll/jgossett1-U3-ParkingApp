@@ -1,5 +1,6 @@
 package U3_final.checkouts;
 
+import U3_final.Menu;
 import U3_final.OutMachine;
 import U3_final.Ticket;
 
@@ -30,14 +31,9 @@ public class CheckOutWithTicket implements OutMachine {
                 if (ID == ticket.getId()) {
                     foundTix = true;
                     stayCost = 5;
-                    int leaveTime = (rand.nextInt(12) + 12);
+                    int leaveTime = (rand.nextInt(12) + 11);
                     int timeDiff = (leaveTime - ticket.getEnterTime());
-                    for (Ticket ticket2 : tickets2) {
-                        if (ID == ticket2.getId())
-                        {
-                            ticket2.setExitTime(leaveTime);
-                        }
-                    }
+
                     // formatting for out put
                     leaveTimeFormatter = LocalTime.of(leaveTime, 0);
                     enterTimeFormatter = LocalTime.of(ticket.getEnterTime(), 0);
@@ -45,7 +41,22 @@ public class CheckOutWithTicket implements OutMachine {
                     // did they say for more than 3 hours?
                     if (timeDiff > 3) {
                         stayCost += (timeDiff - 3);
+                    } else if (stayCost > 15)
+                    {
+                        stayCost = 15;
                     }
+
+                    /**
+                     *
+                     * setting cost for file
+                     */
+                    for (Ticket ticket2 : tickets2) {
+                        if (ID == ticket2.getId())
+                        {
+                            ticket2.setCost(stayCost);
+                        }
+                    }
+
                     totalCollected += stayCost;
                     System.out.println("Time to pay!");
                     System.out.println("You owe $" + stayCost);
@@ -83,9 +94,9 @@ public class CheckOutWithTicket implements OutMachine {
 
     @Override
     public void displayInfo() {
-        System.out.println("\n*************************\n" +
-                "Best Value Parking Garage\n" +
-                "*************************\n" +
+        Menu menu = new Menu();
+        menu.printLogo();
+        System.out.println(
                 "**********RECEIPT********\n" +
                 "Hours Parked: " + enterTimeFormatter.format(DateTimeFormatter.ofPattern("hh:mm a")) +
                 " - " + leaveTimeFormatter.format(DateTimeFormatter.ofPattern("hh:mm a")) +
